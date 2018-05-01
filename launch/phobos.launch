@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!--XML-->
+    <launch>
+
+     <param name="robot_description" command="$(find xacro)/xacro '$(find phobos)/urdf/standalone.urdf.xacro'" />
+
+     <arg name="gui" default="False" />
+     <arg name="use_tf_static" default="false"/> 
+     <param name="use_gui" value="$(arg gui)"/>
+
+     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node>
+     <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+	    <param name="use_tf_static" value="$(arg use_tf_static)"/>
+     </node>
+     
+     <group ns="stereo">
+
+        <!-- Be sure to change this to your system's serials -->
+        <arg name="phobos_left_serial" value="31710260" />
+        <arg name="phobos_right_serial" value="31710277" />
+
+        <arg name="fps" default="30/1"/>
+        <arg name="frame_width" default="640"/>
+        <arg name="frame_height" default="480"/>
+        <arg name="gstreamer_pipeline" default="video/x-raw, format=BGRA,width=${frame_width}, height=${frame_height},framerate=${fps} ! videoconvert ! ximagesink ">
+        
+        <!-- Start the GSCAM nodes -->
+        <node pkg="nodelet" type="nodelet"
+            name="GSCamNodelet" 
+            args="load gscam/GSCamNodelet standalone_nodelet" 
+            output="screen">
+            <param name="camera_name" value="left"/>
+            <param name="camera_info_url" value="file://${ROS_HOME}/camera_info/left.yaml"/>
+            <param name="gscam_config" value="tcambin serial=${phobos_left_serial} ! ${gstreamer_pipeline}"/>
+            <param name="frame_id" value="/left"/>
+            <param name="sync_sink" value="true"/>
+        </node>
+
+        <node pkg="nodelet" type="nodelet"
+            name="GSCamNodelet" 
+            args="load gscam/GSCamNodelet standalone_nodelet" 
+            output="screen">
+            <param name="camera_name" value="phobos_right"/>
+            <param name="camera_info_url" value="file://${ROS_HOME}/camera_info/right.yaml"/>
+            <param name="gscam_config" value="tcambin serial=${phobos_right_serial} ! ${gstreamer_pipeline} "/>
+            <param name="frame_id" value="right"/>
+            <param name="sync_sink" value="true"/>
+        </node> 
+
+        <node pkg="stereo_image_proc" type="stereo_image_proc" name="stereo_image_proc">
+	    <!-- BM, for some reason SGBM fails -->
+	        <param name="stereo_algorithm" value="0" />
+	        <param name="min_disparity" value="4" />
+	        <param name="disparity_range" value="128" />
+            <param name="correlation_window_size" value="35" />
+	    </node>
+   
+    </group>
+
+</launch>

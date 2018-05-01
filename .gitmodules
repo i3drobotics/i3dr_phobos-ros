@@ -1,0 +1,3 @@
+[submodule "tiscamera"]
+	path = tiscamera
+	url = https://github.com/theimagingsource/tiscamera
