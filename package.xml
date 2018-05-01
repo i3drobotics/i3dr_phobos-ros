@@ -22,5 +22,6 @@
   <depend>nodelet</depend>
   <depend>sensor_msgs</depend>
   <depend>libv4l-dev</depend>
+  <depend>gscam></depend>
 
 </package>
