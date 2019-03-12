@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--XML-->
+<launch>
+    <!-- HAND EYE CALIBRATION -->
+
+    <!-- Choose marker bundle type -->
+    <!-- bundle_type 1: Bundle with 3 markers (8,9,10) -->
+    <!-- bundle_type 2: Bundle with 4 markers (0,1,2,3) -->
+    <arg name="bundle_type" value="2"/>
+    <!-- Choose to use depth or image for alvar marker detection -->
+    <!-- depth=true: Uses point cloud to detect alvar markers -->
+    <!-- depth=false: Uses left camera image to detect alvar markers -->
+    <arg name="depth" value="true"/>
+
+    <!-- alvar marker detection parameters -->
+    <arg if="$(eval bundle_type == 1)" name="marker_size" default="4.4" />
+    <arg if="$(eval bundle_type == 2)" name="marker_size" default="9" />
+    <arg name="max_new_marker_error" default="0.08" />
+    <arg name="max_track_error" default="0.2" />
+    <arg name="med_filt_size" default="10" />
+    <arg if="$(eval bundle_type == 1)" name="bundle_files" default="$(find phobos)/bundles/marker_bundle_8_9_10/table_8_9_10.xml" />
+    <arg if="$(eval bundle_type == 2)" name="bundle_files" default="$(find phobos)/bundles/marker_bundle_0_1_2_3/table_0_1_2_3.xml" />
+    <arg if="$(arg depth)" name="alvar_node" default="findMarkerBundles" />
+    <arg unless="$(arg depth)" name="alvar_node" default="findMarkerBundlesNoKinect" />
+
+    <!-- alvar frame parameters -->
+    <arg if="$(arg depth)" name="cam_image_topic" default="/stereo/points2" />
+    <arg unless="$(arg depth)" name="cam_image_topic" default="/stereo/left/image_color" />
+    <arg name="cam_info_topic" default="/stereo/left/camera_info" />	
+    <arg name="output_frame" default="/base_link" />
+
+    <node name="ar_track_alvar" pkg="ar_track_alvar" type="$(arg alvar_node)" respawn="false" output="screen" args="$(arg marker_size) $(arg max_new_marker_error) $(arg max_track_error) $(arg cam_image_topic) $(arg cam_info_topic) $(arg output_frame) $(arg med_filt_size) $(arg bundle_files)" />
+</launch>

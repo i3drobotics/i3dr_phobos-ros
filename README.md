@@ -6,4 +6,8 @@ Phobos is a high resolution (5MP), high accuracy (sub-mm up to a few metres), gl
 * Adjustment of frame sizes
 * Adjustment of frame rate (currently up to 30 fps at 5MP)
 
+Stereo calibration of Phobos can be done using the launch files provided
+
+Package includes support for hand-eye calibration through alvar markers
+
 Support will soon be added for control over triggering.

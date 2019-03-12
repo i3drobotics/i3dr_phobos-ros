@@ -5,8 +5,6 @@ Copyright (c) 2018, I3D Robotics Ltd.
 
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
-    <xacro:property name="M_PI" value="3.14159"/>
-
     <xacro:macro name="phobos_camera">
 
     <link name="cameraLeft_optical" />
@@ -16,13 +14,14 @@ Copyright (c) 2018, I3D Robotics Ltd.
 
     <link name="phobos_center">
         <visual>
-            <origin xyz="0 0 0.7" rpy="0 0 0"/>
+            <!--<origin xyz="0.025 0 0.07" rpy="0 0 0"/>-->
+            <origin xyz="0.07 0 0.025" rpy="0 0 0"/>
             <geometry>
-                <box size="0.05 0.390 0.140"/>
+                <box size="0.140 0.390 0.05"/>
                 <!--mesh filename="package://deimos/urdf/phobos.stl" /-->
             </geometry>
-            <material name="Yellow">
-                <color rgba="0 0.976 0.761 0.024"/>
+            <material name="Orange">
+                <color rgba="1 0.5 0 1"/>
             </material>
         </visual>
     </link>
@@ -32,27 +31,29 @@ Copyright (c) 2018, I3D Robotics Ltd.
     <joint name="phobos_right_camera_joint" type="fixed">
         <parent link="phobos_center"/>
         <child link="cameraRight"/>
-        <origin xyz="0.0245 0.148794 0.086874" rpy="0 0 0" />
+        <!--<origin xyz="0.0245 0.148794 0.086874" rpy="0 0 0" />-->
+        <origin xyz="0.086874 -0.148794  0.0245" rpy="0 0 0" />
     </joint>
 
     <joint name="phobos_left_camera_joint" type="fixed">
         <parent link="phobos_center"/>
         <child link="cameraLeft"/>
-        <origin xyz="0 -0.297587 0" rpy="0 0 0" />
+        <!--<origin xyz="0.0245 -0.148794 0.086874" rpy="0 0 0" />-->
+        <origin xyz="0.086874 0.148794 0.0245" rpy="0 0 0" />
     </joint>
 
     <joint name="phobos_left_optical_joint" type="fixed">
         <parent link="cameraLeft"/>
         <child link="cameraLeft_optical"/>
 	<!-- Correct for the optical frame orientation -->
-        <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
+        <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}" />
     </joint>
 
     <joint name="phobos_right_optical_joint" type="fixed">
         <parent link="cameraRight"/>
         <child link="cameraRight_optical"/>
 	<!-- Correct for the optical frame orientation -->
-        <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
+        <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}" />
     </joint>
 
     <joint name="phobos_depth_camera_joint" type="fixed">
