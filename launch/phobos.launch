@@ -2,46 +2,30 @@
 <!--XML-->
 <launch>
     <!-- SETUP ARGUMENTS -->
-    <!-- enable/disable the running of stereo calibration -->
-    <arg name="stereo_cal" default="false" />
-    <!-- enable/disable the running of hand eye calibration -->
-    <arg name="hand_eye" default="false" />
     <!-- enable/disable this machine as ROS master -->
     <arg name="master" default="true" />
+    <!-- enable/disable rviz -->
+    <arg name="rviz" default="true" />
 
-    <!-- STEREO MATCHER -->
-    <include file="$(find phobos)/launch/stereo_matcher.launch">
+    <!-- STEREO CAPTURE -->
+    <include file="$(find phobos)/launch/stereo_capture.launch">
         <!-- enable/disable this launcher as ROS master -->
         <!-- (robot model should be handelled by master) -->
         <arg name="master_robot_model" value="$(arg master)"/>
-        <!-- enable/disable rviz display -->
-        <arg name="rviz" value="true"/>
+        <!-- Be sure to change this to your cameras serials -->
+        <arg name="camera_right_serial" default="31710260"/>
+        <arg name="camera_left_serial" default="31710277"/>
+    </include>
+
+    <!-- STEREO MATCHER -->
+    <include file="$(find phobos)/launch/stereo_matcher.launch">
         <!-- enable/disable gui for stereo matching parameters -->
         <arg name="gui" value="false"/>
     </include>
 
-    <!-- STEREO CALIBRATION -->
-    <include if="$(arg stereo_cal)" file="$(find phobos)/launch/stereo_calibration.launch">
-        <!-- number of rows in checkerboard -->
-        <arg name="grid_rows" value="9" />
-        <!-- number of columns in checkerboard -->
-        <arg name="grid_cols" value="6" />
-        <!-- size of squares in checkerboard -->
-        <arg name="grid_size" value="0.025" />
-        <!-- enable/disable approximate sync for stereo cameras that do not trigger in unison -->
-        <arg name="approximate_sync" value="true" />
-    </include>
-
-    <!-- HAND EYE CALIBRATION -->
-    <include if="$(arg hand_eye)" file="$(find phobos)/launch/hand_eye_calibration.launch">
-        <!-- Choose marker bundle type -->
-        <!-- bundle_type 1: Bundle with 3 markers (8,9,10) -->
-        <!-- bundle_type 2: Bundle with 4 markers (0,1,2,3) -->
-        <arg name="bundle_type" value="2"/>
-        <!-- Choose to use depth or image for alvar marker detection -->
-        <!-- depth=true: Uses point cloud to detect alvar markers -->
-        <!-- depth=false: Uses left camera image to detect alvar markers -->
-        <arg name="depth" value="true"/>
-    </include>
+    <!-- DISPLAY -->
+    <!-- run rviz with config file -->
+    <node if="$(arg rviz)" pkg="rviz" type="rviz" name="rivz" 
+        args="-d $(find phobos)/rviz/scene.rviz"/>
 
 </launch>
