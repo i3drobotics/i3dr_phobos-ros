@@ -7,7 +7,6 @@ Panels:
         - /Global Options1
         - /RobotModel1/Links1
         - /TF1/Frames1
-        - /Phobos_Point_cloud1
       Splitter Ratio: 0.495918363
     Tree Height: 406
   - Class: rviz/Selection
@@ -157,14 +156,14 @@ Visualization Manager:
       Size (Pixels): 1
       Size (m): 0.00999999978
       Style: Points
-      Topic: /stereo/points2
+      Topic: /phobos/points2
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
     - Class: rviz/Image
       Enabled: true
-      Image Topic: /stereo/left/image_raw
+      Image Topic: /phobos/left/image_raw
       Max Value: 1
       Median window: 5
       Min Value: 0
@@ -176,7 +175,7 @@ Visualization Manager:
       Value: true
     - Class: rviz/Image
       Enabled: true
-      Image Topic: /stereo/right/image_raw
+      Image Topic: /phobos/right/image_raw
       Max Value: 1
       Median window: 5
       Min Value: 0

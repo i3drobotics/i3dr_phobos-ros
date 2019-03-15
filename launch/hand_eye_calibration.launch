@@ -24,9 +24,9 @@
     <arg unless="$(arg depth)" name="alvar_node" default="findMarkerBundlesNoKinect" />
 
     <!-- alvar frame parameters -->
-    <arg if="$(arg depth)" name="cam_image_topic" default="/stereo/points2" />
-    <arg unless="$(arg depth)" name="cam_image_topic" default="/stereo/left/image_color" />
-    <arg name="cam_info_topic" default="/stereo/left/camera_info" />	
+    <arg if="$(arg depth)" name="cam_image_topic" default="/phobos/points2" />
+    <arg unless="$(arg depth)" name="cam_image_topic" default="/phobos/left/image_color" />
+    <arg name="cam_info_topic" default="/phobos/left/camera_info" />	
     <arg name="output_frame" default="/cameraLeft_optical" />
 
     <node name="ar_track_alvar" pkg="ar_track_alvar" type="$(arg alvar_node)" respawn="false" output="screen" args="$(arg marker_size) $(arg max_new_marker_error) $(arg max_track_error) $(arg cam_image_topic) $(arg cam_info_topic) $(arg output_frame) $(arg med_filt_size) $(arg bundle_files)" />

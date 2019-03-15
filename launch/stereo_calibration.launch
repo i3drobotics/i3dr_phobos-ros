@@ -18,10 +18,10 @@
    
     <node pkg="camera_calibration" type="cameracalibrator.py" name="stereo_cal" output="screen"
         args="$(arg approx_val) --size $(arg grid_rows)x$(arg grid_cols) --square $(arg grid_size)">
-        <remap from="right" to="/stereo/right/image_raw"/>
-        <remap from="left" to="/stereo/left/image_raw"/>
-        <remap from="right_camera" to="/stereo/right"/>
-        <remap from="left_camera" to="/stereo/left"/>
+        <remap from="right" to="/phobos/right/image_raw"/>
+        <remap from="left" to="/phobos/left/image_raw"/>
+        <remap from="right_camera" to="/phobos/right"/>
+        <remap from="left_camera" to="/phobos/left"/>
     </node>
 
     <!-- See below for more information on the stereo calibration process -->

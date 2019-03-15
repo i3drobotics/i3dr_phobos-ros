@@ -1,85 +1,36 @@
 <?xml version="1.0"?>
 <!--XML-->
-    <launch>
+<launch>
 
     <!-- SETUP ARGUMENTS -->
-    <arg name="master_robot_model" default="true"/>
-    <arg name="rviz" default="true"/>
     <arg name="gui" default="false"/>
 
-    <group if="$(arg master_robot_model)">
-        <!-- SETUP ROBOT MODEL -->
-        <!-- (robot model should be handelled by master) -->
-        <param name="robot_description" command="$(find xacro)/xacro '$(find phobos)/urdf/standalone.urdf.xacro'" />
-        <arg name="use_tf_static" default="false"/>
-        <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node>
-        <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
-            <param name="use_tf_static" value="$(arg use_tf_static)"/>
-        </node>
-    </group>
-
     <!-- STEREO <MATCHER> -->
-    <group ns="stereo">
+    <node ns="phobos" pkg="stereo_image_proc" type="stereo_image_proc" name="stereo_image_proc" output="screen">
+        <!-- Matcher Parameters -->
+        <!-- see link below for details on matcher parameters -->
+        <!-- http://wiki.ros.org/stereo_image_proc/Tutorials/ChoosingGoodStereoParameters -->
+        <!-- algorithm 1: OpenCV block -->
+        <!-- algorithm 2: OpenCV SGBM -->
+        <param name="stereo_algorithm" value="0" />
+        <param name="min_disparity" value="-210" />
+        <param name="disparity_range" value="220" />
+        <param name="correlation_window_size" value="19" />
+        <param name="uniqueness_ratio" value="2" />
+        <param name="speckle_size" value="500" />
 
-        <!-- Be sure to change this to your cameras serials -->
-        <arg name="left_serial" value="31710277" />
-		<arg name="right_serial" value="31710260" />
-
-        <arg name="fps" value="15"/>
-        <arg name="frame_width" value="1920"/>
-        <arg name="frame_height" value="1080"/>
-        <arg name="pipeline" value="video/x-raw, format=(string)GRAY8, width=$(arg frame_width), height=$(arg frame_height),framerate=$(arg fps)/1 ! videoconvert --verbose"/>
-        
-        <!-- Start the GSCAM nodes -->
-        <node ns="left" name="phobos_node_left" pkg="gscam" type="gscam" output="screen">
-            <param name="camera_name" value="left"/>
-            <param name="camera_info_url" value="file:///home/i3dr/.ros/camera_info/left.yaml"/>
-            <param name="gscam_config" value="tcamsrc serial=$(arg left_serial) ! $(arg pipeline)"/>
-            <param name="frame_id" value="/cameraLeft_optical"/>
-            <!-- param name="image_encoding" value="mono8" /-->
-            <param name="sync_sink" value="true"/>
-        </node>
-
-        <node ns="right" name="phobos_node_right" pkg="gscam" type="gscam" output="screen">
-            <param name="camera_name" value="right"/>
-            <param name="camera_info_url" value="file:///home/i3dr/.ros/camera_info/right.yaml"/>
-            <param name="gscam_config" value="tcamsrc serial=$(arg right_serial) ! $(arg pipeline)"/>
-            <param name="frame_id" value="/cameraLeft_optical"/>
-            <!-- param name="image_encoding" value="mono8" /-->
-            <param name="sync_sink" value="true"/>
-        </node>
-
-        <node pkg="stereo_image_proc" type="stereo_image_proc" name="stereo_image_proc" output="screen">
-            <!-- Matcher Parameters -->
-            <!-- see link below for details on matcher parameters -->
-            <!-- http://wiki.ros.org/stereo_image_proc/Tutorials/ChoosingGoodStereoParameters -->
-            <!-- algorithm 1: OpenCV block -->
-            <!-- algorithm 2: OpenCV SGBM -->
-        	<param name="stereo_algorithm" value="0" />
-			<param name="min_disparity" value="-210" />
-			<param name="disparity_range" value="64" />
-			<param name="correlation_window_size" value="9" />
-			<param name="uniqueness_ratio" value="2" />
-			<param name="speckle_size" value="500" />
-			
-            <!-- approximate sync used when cameras are not perfectly triggered in unison -->
-			<param name="approximate_sync" value="true" />
-			<param name="queue_size" value="50"/>
-		</node>
-
-    </group>
+        <!-- approximate sync used when cameras are not perfectly triggered in unison -->
+        <param name="approximate_sync" value="true" />
+        <param name="queue_size" value="50"/>
+    </node>
 
     <!-- DISPLAY -->
-    <!-- run rviz with config file -->
-    <node if="$(arg rviz)" pkg="rviz" type="rviz" name="rivz" 
-        args="-d $(find phobos)/rviz/scene.rviz"/>
-
     <!-- display phobos disparity image -->
-	<node if="$(arg gui)" pkg="image_view" type="disparity_view" name="disparity_view" output="screen">
-		<remap from="image" to="/stereo/disparity" />
-	</node>
+    <node if="$(arg gui)" pkg="image_view" type="disparity_view" name="disparity_view" output="screen">
+        <remap from="image" to="/phobos/disparity" />
+    </node>
 
     <!-- run rqt control gui for adjusting stereo configuration -->
-	<node if="$(arg gui)" pkg="rqt_reconfigure" type="rqt_reconfigure" name="display_controls" />
+    <node if="$(arg gui)" pkg="rqt_reconfigure" type="rqt_reconfigure" name="display_controls" />
 
 </launch>
