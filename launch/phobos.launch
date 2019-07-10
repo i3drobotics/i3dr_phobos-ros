@@ -2,30 +2,61 @@
 <!--XML-->
 <launch>
     <!-- SETUP ARGUMENTS -->
-    <!-- enable/disable this machine as ROS master -->
-    <arg name="master" default="true" />
     <!-- enable/disable rviz -->
     <arg name="rviz" default="true" />
+    <!-- enable/disable calibration -->
+    <arg name="calibrate" default="false"/>
+    <arg name="stereo_match" default="true"/>
 
+    <arg name="camera_name" default="phobos"/>
+
+    <!-- SETUP ROBOT MODEL -->
+    <!-- (robot model should be handelled by master) -->
+    <param name="$(arg camera_name)_robot_description" command="$(find xacro)/xacro '$(find i3dr_phobos)/urdf/phobos_scene.urdf.xacro'" />
+    <arg name="use_tf_static" default="false"/>
+    <node name="robot_state_publisher_phobos" pkg="robot_state_publisher" type="state_publisher">
+        <remap from="robot_description" to="$(arg camera_name)_robot_description"/>
+        <param name="use_tf_static" value="$(arg use_tf_static)"/>
+    </node>
+    
     <!-- STEREO CAPTURE -->
-    <include file="$(find phobos)/launch/stereo_capture.launch">
-        <!-- enable/disable this launcher as ROS master -->
-        <!-- (robot model should be handelled by master) -->
-        <arg name="master_robot_model" value="$(arg master)"/>
+    <include file="$(find i3dr_stereo_camera)/launch/stereo_capture.launch">
         <!-- Be sure to change this to your cameras serials -->
-        <arg name="camera_right_serial" default="31710260"/>
-        <arg name="camera_left_serial" default="31710277"/>
+        <arg name="camera_namespace" value="$(arg camera_name)"/>
+        <arg name="camera_right_serial" value="27810457"/>
+        <arg name="camera_left_serial" value="41810612"/>
+        <arg name="frame_width" value="1920"/>
+        <arg name="frame_height" value="1080"/>
+        <arg name="exposure" value="10000"/>
+        <arg name="gain" value="0"/>
+    </include>
+
+    <!-- STEREO CALIBRATION -->
+    <include if="$(arg calibrate)" file="$(find i3dr_stereo_camera)/launch/stereo_calibration.launch">
+        <arg name="camera_namespace" value="$(arg camera_name)"/>
+        <arg name="single_cal" value="true"/>
+        <arg name="stereo_cal" value="false"/>
     </include>
 
     <!-- STEREO MATCHER -->
-    <include file="$(find phobos)/launch/stereo_matcher.launch">
+    <include if="$(arg stereo_match)" file="$(find i3dr_stereo_camera)/launch/stereo_matcher.launch">
+        <arg name="use_i3dr_matcher" value="true"/>
+
         <!-- enable/disable gui for stereo matching parameters -->
+        <arg name="camera_namespace" value="$(arg camera_name)"/>
         <arg name="gui" value="false"/>
+        <arg name="stereo_algorithm" value="0" />
+        <arg name="min_disparity" value="-250" />
+        <arg name="disparity_range" value="192" />
+        <arg name="correlation_window_size" value="19" />
+        <arg name="uniqueness_ratio" value="1" />
+        <arg name="speckle_range" value="4" />
+        <arg name="speckle_size" value="1000" />
     </include>
 
     <!-- DISPLAY -->
     <!-- run rviz with config file -->
     <node if="$(arg rviz)" pkg="rviz" type="rviz" name="rivz" 
-        args="-d $(find phobos)/rviz/scene.rviz"/>
+        args="-d $(find i3dr_phobos)/rviz/scene.rviz"/>
 
 </launch>

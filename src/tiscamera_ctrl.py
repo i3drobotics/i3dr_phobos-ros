@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import rospy
 from std_srvs.srv import Empty, EmptyResponse, SetBool, SetBoolResponse
-from phobos.srv import SetInt, SetIntResponse
+from i3dr_phobos.srv import SetInt, SetIntResponse
 import tiscamera
 
 class tiscamera_ctrl(object):

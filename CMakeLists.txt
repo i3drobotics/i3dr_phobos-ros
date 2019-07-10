@@ -1,21 +1,10 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(phobos)
+project(i3dr_phobos)
 
 find_package(catkin REQUIRED roscpp std_msgs tf rospy message_generation)
 
 include_directories(
     ${catkin_INCLUDE_DIRS}
-)
-
-add_service_files(
-    FILES
-    SetFloat.srv
-    SetInt.srv
-)
-
-generate_messages(
-  DEPENDENCIES
-  std_msgs
 )
 
 catkin_package(

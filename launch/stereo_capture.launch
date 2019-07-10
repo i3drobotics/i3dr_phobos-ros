@@ -5,13 +5,13 @@
     <!-- SETUP ARGUMENTS -->
     <arg name="master_robot_model" default="true"/>
     <!-- Be sure to change this to your cameras serials -->
-    <arg name="camera_right_serial" default="31710260"/>
-    <arg name="camera_left_serial" default="31710277"/>
+    <arg name="camera_right_serial" default="27810457"/>
+    <arg name="camera_left_serial" default="41810612"/>
 
     <group if="$(arg master_robot_model)">
         <!-- SETUP ROBOT MODEL -->
         <!-- (robot model should be handelled by master) -->
-        <param name="robot_description" command="$(find xacro)/xacro '$(find phobos)/urdf/standalone.urdf.xacro'" />
+        <param name="robot_description" command="$(find xacro)/xacro '$(find i3dr_phobos)/urdf/standalone.urdf.xacro'" />
         <arg name="use_tf_static" default="false"/>
         <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node>
         <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
@@ -55,7 +55,7 @@
         <!-- (optional) set inital camera properties using the parameters [Exposure/Gain/Exposure_Auto/Gain_Auto] -->
         <!-- set camera properties using services from this node
              rosservice call /phobos/left/tiscam_set_exposure_auto -->
-        <node ns="left" name="phobos_left_ctrl" pkg="phobos" type="tiscamera_ctrl.py" output="screen">
+        <node ns="left" name="phobos_left_ctrl" pkg="i3dr_phobos" type="tiscamera_ctrl.py" output="screen">
             <param name="Serial" value="$(arg camera_left_serial)"/>
             <param name="Width" value="$(arg frame_width)"/>
             <param name="Height" value="$(arg frame_height)"/>
@@ -66,7 +66,7 @@
             <param name="Gain_Auto" value="$(arg gain_auto)"/>
         </node>
 
-        <node ns="right" name="phobos_right_ctrl" pkg="phobos" type="tiscamera_ctrl.py" output="screen">
+        <node ns="right" name="phobos_right_ctrl" pkg="i3dr_phobos" type="tiscamera_ctrl.py" output="screen">
             <param name="Serial" value="$(arg camera_right_serial)"/>
             <param name="Width" value="$(arg frame_width)"/>
             <param name="Height" value="$(arg frame_height)"/>

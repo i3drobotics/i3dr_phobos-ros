@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--
+Copyright (c) 2019, I3D Robotics Ltd.
+-->
+
+<robot name="phobos" 
+    xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <!--
+    <xacro:include filename="$(find i3dr_stereo_camera)/urdf/i3dr_stereo_camera.urdf.xacro" />
+
+    <xacro:i3dr_stereo_camera camera_name="phobos" baseline="0.28" toe_in_r="8.5" toe_in_l="8.5"  width="0.39" height="0.05" length="0.14" load_mesh="true" mesh_file="package://i3dr_phobos/mesh/phobos.stl" image_width="1920" image_height="1080" image_format="MONO8" hfov="1.04" focus_near="0.3" r="1" g="0.5" b="0.1" />
+    -->
+    <xacro:include filename="$(find i3dr_phobos)/urdf/phobos2.urdf.xacro"/>
+    <xacro:i3dr_phobos camera_name="phobos" en_mesh="true"/>
+
+    <!--<link name="aruco_marker_left"/>
+    <link name="aruco_marker_right"/>>
+
+    <joint name="arcuo_l_phobos_joint" type="fixed">
+        <parent link="phobos_cameraLeft_optical"/>
+        <child link="aruco_marker_left"/>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+    </joint>
+
+    <joint name="arcuo_r_phobos_joint" type="fixed">
+        <parent link="phobos_cameraRight_optical"/>
+        <child link="aruco_marker_right"/>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+    </joint>-->
+
+</robot>

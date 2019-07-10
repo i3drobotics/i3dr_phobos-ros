@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <robot name="phobos" xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:include filename="$(find phobos)/urdf/phobos.urdf.xacro" />
+  <xacro:include filename="$(find i3dr_phobos)/urdf/phobos.urdf.xacro" />
   
   <link name="base_link" />
 

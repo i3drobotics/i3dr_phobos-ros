@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
 
-  <name>phobos</name>
+  <name>i3dr_phobos</name>
   <version>0.0.1</version>
   <description>
      An initial driver for I3D robotics' phobos stereo camera. This package
@@ -21,7 +21,6 @@
   <depend>image_transport</depend>
   <depend>nodelet</depend>
   <depend>sensor_msgs</depend>
-  <depend>libv4l-dev</depend>
-  <depend>gscam></depend>
+  <depend>i3dr_stereo_camera</depend>
 
 </package>
