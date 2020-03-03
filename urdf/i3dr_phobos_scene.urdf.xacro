@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--
+Copyright (c) 2019, I3D Robotics Ltd.
+-->
+
+<robot name="i3dr_phobos_camera" 
+    xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:arg name="camera_name" default="phobos"/>
+    <xacro:arg name="camera_model" default="phobos"/>
+    <xacro:arg name="en_imu" default="false"/>
+    <xacro:arg name="en_mesh" default="false"/>
+
+    <xacro:property name="camera_model" value="$(arg camera_model)"/>
+
+    <xacro:if value="${camera_model == 'phobos_nuclear'}">
+      <xacro:include filename="$(find i3dr_phobos)/urdf/phobos_nuclear.urdf.xacro"/>
+      <xacro:i3dr_phobos_nuclear camera_name="$(arg camera_name)" en_imu="$(arg en_imu)" en_mesh="$(arg en_mesh)"/>
+    </xacro:if>
+    <xacro:if value="${camera_model == 'phobos'}">
+      <xacro:include filename="$(find i3dr_phobos)/urdf/phobos.urdf.xacro"/>
+      <xacro:i3dr_phobos camera_name="$(arg camera_name)" en_imu="$(arg en_imu)" en_mesh="$(arg en_mesh)"/>
+    </xacro:if>
+</robot>
