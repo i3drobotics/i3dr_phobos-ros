@@ -158,7 +158,27 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        {}
+        i3dr_phobos_base_link:
+          i3dr_phobos_imu_link:
+            {}
+          i3dr_phobos_mount_base_link:
+            i3dr_phobos_center:
+              i3dr_phobos_cameraLeft:
+                i3dr_phobos_cameraLeft_optical:
+                  {}
+                i3dr_phobos_depth_optical_frame:
+                  {}
+              i3dr_phobos_cameraRight:
+                i3dr_phobos_cameraRight_optical:
+                  {}
+            i3dr_phobos_mount_point_1:
+              {}
+            i3dr_phobos_mount_point_2:
+              {}
+            i3dr_phobos_mount_point_3:
+              {}
+            i3dr_phobos_mount_point_4:
+              {}
       Update Interval: 0
       Value: true
     - Class: rviz/Image
@@ -240,7 +260,7 @@ Visualization Manager:
   Global Options:
     Background Color: 48; 48; 48
     Default Light: true
-    Fixed Frame: odom
+    Fixed Frame: i3dr_phobos_base_link
     Frame Rate: 30
   Name: root
   Tools:
@@ -268,18 +288,18 @@ Visualization Manager:
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.220824689
-        Y: -2.17125583
-        Z: -0.319851905
+        X: -0.164239407
+        Y: -2.19598651
+        Z: -0.262153953
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.264796197
+      Pitch: 0.129796192
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 1.41491282
+      Yaw: 0.279912949
     Saved: ~
 Window Geometry:
   Depth:
