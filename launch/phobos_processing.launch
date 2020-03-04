@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<!--XML-->
+<launch>
+    <!-- SETUP ARGUMENTS -->
+    <!-- phobos / phobos_nuclear -->
+    <arg name="camera_model" default="phobos"/>
+    <!-- algorithm 0: OpenCV block -->
+    <!-- algorithm 1: OpenCV SGBM -->
+    <!-- algorithm 2: I3DR SGM -->
+    <arg name="stereo_algorithm" default="0" />
+    <!-- enable/disable rviz -->
+    <arg name="rviz" default="false" />
+    <!-- enable/disable calibration -->
+    <arg name="calibrate" default="false"/>
+    <!-- is camera with split laser functionality being used -->
+    <arg name="split_laser" default="false"/>
+    <!-- enable/disbale stereo matching (3D generation) -->
+    <arg name="stereo_match" default="true"/>
+    <!-- 0=TIS, 1=Basler -->
+    <arg name="camera_type" default="1"/>
+    <!-- namespace for camera -->
+    <arg name="camera_namespace" default="i3dr_phobos"/>
+    <arg name="imu" default="false"/>
+    <arg name="map" default="false" />
+    <arg name="depth_max" default="5" />
+
+    <!-- Use full res camera model mesh (slower) -->
+    <arg name="camera_mesh" default="false" />
+
+    <arg name="urdf_namespace" default="$(arg camera_namespace)"/>
+    
+    <!-- camera calibration files -->
+    <arg name="calibration_folder" default="25-02-2020" />
+    <arg name="cameraLeft_info_url"  default="file://$(find i3dr_phobos)/calibration/$(arg camera_model)/$(arg calibration_folder)/right.yaml" />
+    <arg name="cameraRight_info_url" default="file://$(find i3dr_phobos)/calibration/$(arg camera_model)/$(arg calibration_folder)/left.yaml" />
+
+    <!-- Be sure to change this to your cameras id -->
+    <!-- TIS -->
+    <arg if="$(eval camera_type == 0)" name="camera_right_serial" default="31710277"/>
+    <arg if="$(eval camera_type == 0)" name="camera_left_serial" default="31710260"/>
+    <!-- Basler -->
+    <arg if="$(eval camera_type == 1)" name="camera_right_serial" default="$(arg camera_model)_r"/>
+    <arg if="$(eval camera_type == 1)" name="camera_left_serial" default="$(arg camera_model)_l"/>
+
+    <!-- SETUP ROBOT MODEL -->
+    <param name="$(arg camera_model)_robot_description" command="$(find xacro)/xacro '$(find i3dr_phobos)/urdf/i3dr_phobos_scene.urdf.xacro' en_imu:=$(arg imu) camera_name:=$(arg urdf_namespace) camera_model:=$(arg camera_model) en_mesh:=$(arg camera_mesh)" />
+    <node name="robot_state_publisher_phobos_nuclear" pkg="robot_state_publisher" type="state_publisher">
+        <remap from="robot_description" to="$(arg camera_model)_robot_description"/>
+    </node>
+
+    <!-- STEREO CALIBRATION -->
+    <include if="$(arg calibrate)" file="$(find i3dr_stereo_camera)/launch/stereo_calibration.launch">
+        <arg name="split_laser" value="$(arg split_laser)"/>
+        <arg name="camera_namespace" value="$(arg camera_namespace)"/>
+        <arg name="multi_board" value="false" />
+        <arg name="grid_rows" value="8" />
+    </include>
+
+    <!-- STEREO MATCHER -->
+    <include if="$(arg stereo_match)" file="$(find i3dr_stereo_camera)/launch/stereo_matcher.launch">
+        <arg name="use_i3dr_matcher" value="true"/>
+
+        <!-- Matcher Parameters -->
+        <!-- see link below for details on matcher parameters -->
+        <!-- http://wiki.ros.org/stereo_image_proc/Tutorials/ChoosingGoodStereoParameters -->
+        <!-- algorithm 0: OpenCV block -->
+        <!-- algorithm 1: OpenCV SGBM -->
+        <!-- algorithm 2: I3DR SGM -->
+        <arg name="stereo_algorithm" value="$(arg stereo_algorithm)" />
+
+        <!-- maximum depth value (m) -->
+        <arg name="depth_max" value="$(arg depth_max)" />
+        <arg name="depth_min" value="0" />
+
+        <arg name="gui" value="false"/>
+        <arg name="split_laser" value="$(arg split_laser)"/>
+        <arg name="camera_namespace" value="$(arg camera_namespace)"/>
+        <arg name="frame_id" value="$(arg urdf_namespace)_depth_optical_frame" />
+
+        <arg name="min_disparity" value="250" />
+        <arg name="disparity_range" value="480" />
+    </include>
+
+    <include if="$(arg imu)" file="$(find rosserial_adafruit_bno055)/launch/rosserial_adafruit_bno055.launch">
+        <arg name="port" value="/dev/ttyACM0"/>
+        <arg name="frame_id" value="$(arg urdf_namespace)_base_link"/>
+        <arg name="namespace" value="$(arg camera_namespace)"/>
+        <arg name="publish_tf" value="$(arg map)" />
+    </include>
+
+    <group if="$(arg map)">
+        <arg name="map_frame_id" default="scan" />
+        <arg name="map_resolution" default="0.001"/>
+        <include if="$(arg map)" file="$(find i3dr_rtabmap)/launch/standalone_rtabmap.launch">
+            <arg name="camera_en" value="false"/>
+            <arg name="camera_namespace" value="$(arg camera_namespace)"/>
+            <arg name="camera_model" value="$(arg camera_model)"/>
+            <arg name="urdf_namespace" value="$(arg urdf_namespace)"/>
+            <arg name="split_laser" value="false"/>
+            <arg name="rviz" value="$(arg rviz)" />
+            <arg name="map_frame_id" value="$(arg map_frame_id)"/>
+            <arg name="grid_size" value="$(arg map_resolution)" />
+            <arg name="imu" value="$(arg imu)" />
+            <arg name="gftt_min_dist" value="10"/>
+            <arg name="max_depth" value="$(arg depth_max)"/>
+            <arg name="use_compressed" value="false"/>
+        </include>
+    </group>
+    <group unless="$(arg map)">
+        <!-- run rviz with config file -->
+        <node if="$(arg rviz)" pkg="rviz" type="rviz" name="$(arg camera_model)_processing_rivz" 
+            args="-d $(find i3dr_phobos)/rviz/$(arg camera_model)_scene.rviz"/>
+    </group>
+
+</launch>
