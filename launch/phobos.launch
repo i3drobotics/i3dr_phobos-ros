@@ -20,7 +20,7 @@
     <arg name="camera_type" default="1"/>
     <!-- namespace for camera -->
     <arg name="camera_namespace" default="i3dr_phobos"/>
-    <arg name="imu" default="false"/>
+    <arg name="imu" default="true"/>
     <arg name="map" default="false" />
     <arg name="depth_max" default="5" />
 
@@ -112,7 +112,7 @@
         <arg name="namespace" value="$(arg camera_namespace)"/>
     </include>
 
-    <arg name="imu_mag" default="false"/>
+    <arg name="imu_mag" default="true"/>
     <group if="$(arg imu_mag)">
         <node if="$(arg imu)" name="$(arg camera_namespace)_imu_filter" pkg="imu_filter_madgwick" type="imu_filter_node" output="screen">
             <param name="use_mag" value="true"/>
