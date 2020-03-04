@@ -18,8 +18,8 @@
 
     <arg name="urdf_namespace" default="$(arg camera_namespace)"/>
 
-    <arg name="imu" default="false"/>
-    <arg name="publish_imu_tf" default="true"/>
+    <arg name="imu" default="true"/>
+    <arg name="publish_imu_tf" default="false"/>
 
     <!-- camera calibration files -->
     <arg name="calibration_folder" default="25-02-2020" />
@@ -62,7 +62,7 @@
     <include if="$(arg imu)" file="$(find rosserial_adafruit_bno055)/launch/rosserial_adafruit_bno055.launch">
         <arg name="port" value="/dev/ttyACM0"/>
         <arg name="frame_id" value="$(arg urdf_namespace)_base_link"/>
-        <arg name="namespace" value="$(arg camera_namespace)"/>
+        <arg name="namespace" value=""/>
         <arg name="publish_tf" value="$(arg publish_imu_tf)" />
     </include>
 
