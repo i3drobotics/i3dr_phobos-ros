@@ -110,28 +110,8 @@
         <arg name="port" value="/dev/ttyACM0"/>
         <arg name="frame_id" value="$(arg urdf_namespace)_base_link"/>
         <arg name="namespace" value="$(arg camera_namespace)"/>
+        <arg name="publish_tf" value="$(arg map)" />
     </include>
-
-    <arg name="imu_mag" default="true"/>
-    <group if="$(arg imu_mag)">
-        <node if="$(arg imu)" name="$(arg camera_namespace)_imu_filter" pkg="imu_filter_madgwick" type="imu_filter_node" output="screen">
-            <param name="use_mag" value="true"/>
-            <param name="use_magnetic_field_msg" value="true"/>
-            <remap from="/imu/data_raw" to="/$(arg camera_namespace)/imu/data_raw"/>
-            <remap from="/imu/mag" to="/$(arg camera_namespace)/imu/mag"/>
-            <param name="publish_tf" type="bool" value="$(eval arg('map')==0)" />
-            <param name="world_frame" type="string" value="nwu" />
-        </node>
-    </group>
-    <group unless="$(arg imu_mag)">
-        <node if="$(arg imu)" name="deimos_imu_filter" pkg="imu_filter_madgwick" type="imu_filter_node" output="screen">
-            <param name="use_mag" value="false"/>
-            <param name="use_magnetic_field_msg" value="false"/>
-            <remap from="/imu/data_raw" to="/$(arg camera_namespace)/imu/data_raw"/>
-            <param name="publish_tf" type="bool" value="$(eval arg('map')==0)" />
-            <param name="world_frame" type="string" value="nwu" />
-        </node>
-    </group>
 
     <group if="$(arg map)">
         <arg name="map_frame_id" default="scan" />
