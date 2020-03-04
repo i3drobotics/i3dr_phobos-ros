@@ -152,37 +152,13 @@ Visualization Manager:
           Value: true
         i3dr_phobos_mount_point_4:
           Value: true
-        odom:
-          Value: true
       Marker Scale: 0.300000012
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: true
       Tree:
-        i3dr_phobos_base_link:
-          i3dr_phobos_imu_link:
-            {}
-          i3dr_phobos_mount_base_link:
-            i3dr_phobos_center:
-              i3dr_phobos_cameraLeft:
-                i3dr_phobos_cameraLeft_optical:
-                  {}
-                i3dr_phobos_depth_optical_frame:
-                  {}
-              i3dr_phobos_cameraRight:
-                i3dr_phobos_cameraRight_optical:
-                  {}
-            i3dr_phobos_mount_point_1:
-              {}
-            i3dr_phobos_mount_point_2:
-              {}
-            i3dr_phobos_mount_point_3:
-              {}
-            i3dr_phobos_mount_point_4:
-              {}
-        odom:
-          {}
+        {}
       Update Interval: 0
       Value: true
     - Class: rviz/Image
@@ -327,5 +303,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1855
-  X: 65
+  X: 1985
   Y: 24
