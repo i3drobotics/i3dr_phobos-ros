@@ -105,9 +105,24 @@
             <arg name="max_depth" value="$(arg depth_max)"/>
             <arg name="use_compressed" value="false"/>
         </include>
+
+        <include if="$(arg imu)" file="$(find rosserial_adafruit_bno055)/launch/rosserial_adafruit_bno055.launch">
+            <arg name="port" value="/dev/ttyACM0"/>
+            <arg name="frame_id" value="$(arg urdf_namespace)_base_link"/>
+            <arg name="namespace" value="$(arg camera_namespace)"/>
+            <arg name="publish_tf" value="false" />
+        </include>
+
     </group>
     <group unless="$(arg map)">
-        <!-- run rviz with config file -->
+
+        <include if="$(arg imu)" file="$(find rosserial_adafruit_bno055)/launch/rosserial_adafruit_bno055.launch">
+            <arg name="port" value="/dev/ttyACM0"/>
+            <arg name="frame_id" value="$(arg urdf_namespace)_base_link"/>
+            <arg name="namespace" value="$(arg camera_namespace)"/>
+            <arg name="publish_tf" value="true" />
+        </include>
+
         <node if="$(arg rviz)" pkg="rviz" type="rviz" name="$(arg camera_model)_processing_rivz" 
             args="-d $(find i3dr_phobos)/rviz/$(arg camera_model)_scene.rviz"/>
     </group>
