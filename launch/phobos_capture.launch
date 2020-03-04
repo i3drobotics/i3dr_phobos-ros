@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!--XML-->
+<launch>
+    <!-- SETUP ARGUMENTS -->
+    <!-- phobos / phobos_nuclear -->
+    <arg name="camera_model" default="phobos"/>
+    <!-- enable/disable rviz -->
+    <arg name="rviz" default="false" />
+    <!-- is camera with split laser functionality being used -->
+    <arg name="split_laser" default="false"/>
+    <!-- 0=TIS, 1=Basler -->
+    <arg name="camera_type" default="1"/>
+    <!-- namespace for camera -->
+    <arg name="camera_namespace" default="i3dr_phobos"/>
+
+    <!-- Use full res camera model mesh (slower) -->
+    <arg name="camera_mesh" default="false" />
+
+    <arg name="urdf_namespace" default="$(arg camera_namespace)"/>
+
+    <!-- camera calibration files -->
+    <arg name="calibration_folder" default="25-02-2020" />
+    <arg name="cameraLeft_info_url"  default="file://$(find i3dr_phobos)/calibration/$(arg camera_model)/$(arg calibration_folder)/right.yaml" />
+    <arg name="cameraRight_info_url" default="file://$(find i3dr_phobos)/calibration/$(arg camera_model)/$(arg calibration_folder)/left.yaml" />
+    
+    <!-- Be sure to change this to your cameras id -->
+    <!-- TIS -->
+    <arg if="$(eval camera_type == 0)" name="camera_right_serial" default="31710277"/>
+    <arg if="$(eval camera_type == 0)" name="camera_left_serial" default="31710260"/>
+    <!-- Basler -->
+    <arg if="$(eval camera_type == 1)" name="camera_right_serial" default="$(arg camera_model)_r"/>
+    <arg if="$(eval camera_type == 1)" name="camera_left_serial" default="$(arg camera_model)_l"/>
+    
+    <!-- STEREO CAPTURE -->
+    <include file="$(find i3dr_stereo_camera)/launch/stereo_capture.launch">
+        <!-- camera startup settings -->
+        <arg name="exposure" value="40000"/>
+        <arg name="gain" value="0"/>
+        <arg name="fps" value="1"/>
+        <!-- camera calibration files-->
+        <arg name="camera_info_right" value="$(arg cameraRight_info_url)" />
+        <arg name="camera_info_left" value="$(arg cameraLeft_info_url)" />
+        <!-- frame id -->
+        <arg name="frame_id" value="$(arg urdf_namespace)_depth_optical_frame" />
+
+        <!-- 0=TIS, 1=Basler -->
+        <arg name="camera_type" value="$(arg camera_type)"/>
+        <arg name="binning" value="1"/>
+        <!-- camera is mounted upside down so flip the image -->
+        <arg name="reverse_x" value="true"/>
+        <arg name="reverse_y" value="true"/>
+
+        <arg name="camera_namespace" value="$(arg camera_namespace)"/>
+        <arg name="camera_right_serial" value="$(arg camera_right_serial)"/>
+        <arg name="camera_left_serial" value="$(arg camera_left_serial)"/>
+        <arg name="split_laser" value="$(arg split_laser)"/>
+    </include>
+
+    <!-- run rviz with config file -->
+    <node if="$(arg rviz)" pkg="rviz" type="rviz" name="$(arg camera_model)_capture_rivz" 
+        args="-d $(find i3dr_phobos)/rviz/$(arg camera_model)_standalone_scene.rviz"/>
+
+</launch>
