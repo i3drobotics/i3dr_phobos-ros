@@ -54,6 +54,8 @@
         <arg name="cameraRight_info_url" value="$(arg cameraRight_info_url)" />
         <arg name="camera_left_serial" value="$(arg camera_left_serial)"/>
         <arg name="camera_right_serial" value="$(arg camera_right_serial)"/>
+        <arg name="imu" value="$(arg imu)"/>
+        <arg name="publish_imu_tf" value="$(eval arg('map') == 0)"/>
     </include>
 
     <include file="$(find i3dr_phobos)/launch/phobos_processing.launch">
