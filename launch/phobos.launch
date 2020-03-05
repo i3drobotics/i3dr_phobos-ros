@@ -22,7 +22,7 @@
     <arg name="camera_namespace" default="i3dr_phobos"/>
     <arg name="imu" default="false"/>
     <arg name="map" default="false" />
-    <arg name="depth_max" default="5" />
+    <arg name="depth_max" default="100" />
 
     <!-- Use full res camera model mesh (slower) -->
     <arg name="camera_mesh" default="false" />
@@ -30,7 +30,7 @@
     <arg name="urdf_namespace" default="$(arg camera_namespace)"/>
     
     <!-- camera calibration files -->
-    <arg name="calibration_folder" default="25-02-2020" />
+    <arg name="calibration_folder" default="04-03-2020" />
     <arg name="cameraLeft_info_url"  default="file://$(find i3dr_phobos)/calibration/$(arg camera_model)/$(arg calibration_folder)/right.yaml" />
     <arg name="cameraRight_info_url" default="file://$(find i3dr_phobos)/calibration/$(arg camera_model)/$(arg calibration_folder)/left.yaml" />
 
