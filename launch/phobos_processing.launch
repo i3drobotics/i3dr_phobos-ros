@@ -78,8 +78,12 @@
         <arg name="camera_namespace" value="$(arg camera_namespace)"/>
         <arg name="frame_id" value="$(arg urdf_namespace)_depth_optical_frame" />
 
-        <arg name="min_disparity" value="250" />
-        <arg name="disparity_range" value="480" />
+        <arg if="$(eval arg('stereo_algorithm') == 0)" name="min_disparity" value="-674" />
+        <arg if="$(eval arg('stereo_algorithm') == 0)" name="disparity_range" value="384" />
+        <arg if="$(eval arg('stereo_algorithm') == 1)" name="min_disparity" value="-674" />
+        <arg if="$(eval arg('stereo_algorithm') == 1)" name="disparity_range" value="384" />
+        <arg if="$(eval arg('stereo_algorithm') == 2)" name="min_disparity" value="-800" />
+        <arg if="$(eval arg('stereo_algorithm') == 2)" name="disparity_range" value="384" />
     </include>
 
     <group if="$(arg map)">

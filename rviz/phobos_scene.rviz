@@ -91,10 +91,6 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        i3dr_phobos_imu_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
         i3dr_phobos_mount_base_link:
           Alpha: 1
           Show Axes: false
@@ -140,8 +136,6 @@ Visualization Manager:
           Value: true
         i3dr_phobos_depth_optical_frame:
           Value: true
-        i3dr_phobos_imu_link:
-          Value: true
         i3dr_phobos_mount_base_link:
           Value: true
         i3dr_phobos_mount_point_1:
@@ -159,8 +153,6 @@ Visualization Manager:
       Show Names: true
       Tree:
         i3dr_phobos_base_link:
-          i3dr_phobos_imu_link:
-            {}
           i3dr_phobos_mount_base_link:
             i3dr_phobos_center:
               i3dr_phobos_cameraLeft:
@@ -281,25 +273,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 3.9033494
+      Distance: 2.43171763
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.164239407
-        Y: -2.19598651
-        Z: -0.262153953
+        X: -0.106299713
+        Y: -0.652543902
+        Z: -0.320429206
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.129796192
+      Pitch: 0.594795883
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.279912949
+      Yaw: 0.644912362
     Saved: ~
 Window Geometry:
   Depth:
