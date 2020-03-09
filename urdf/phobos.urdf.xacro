@@ -64,12 +64,12 @@ Copyright (c) 2019, I3D Robotics Ltd.
 
         <xacro:if value="${(en_imu == 'true')}">
             <joint name="${camera_name}_imu_joint" type="fixed">
-                <origin xyz="0 0 0" rpy="0 0 ${pi}" />
+                <origin xyz="0 0 -0.05" rpy="0 0 ${pi}" />
                 <parent link="${camera_name}_base_link" />
                 <child link="${camera_name}_imu_link" />
             </joint>
             <joint name="${camera_name}_imu_mount_joint" type="fixed">
-                <origin xyz="0 0 0" rpy="0 0 ${pi}" />
+                <origin xyz="0 0 -0.05" rpy="0 0 ${pi}" />
                 <parent link="${camera_name}_base_link" />
                 <child link="${camera_name}_mount_base_link" />
             </joint>
