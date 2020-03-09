@@ -11,3 +11,9 @@ Basler implimentation will work as USB or GigE.
 
 This package relies on the **i3dr_stereo_camera** package for capture and generation of 3D. Please make sure you have the **i3dr_stereo_camera** package in your workspace.
 [link](https://github.com/i3drobotics/i3dr_stereo_camera-ros.git)
+
+## Calibration
+Python scripts are provided for calibration outside of ros. 
+Capture images from Phobos camera using capture.py
+Then calibrate the captured images using calibrate.py
+An example calibration is provided in 'cal'

@@ -1,3 +1,5 @@
 *.vscode
 *.code-workspace
 tiscamera/
+scripts/cal/*.xml
+scripts/cal/*.yaml
