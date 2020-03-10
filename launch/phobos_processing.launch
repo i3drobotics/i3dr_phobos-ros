@@ -22,7 +22,7 @@
     <arg name="camera_namespace" default="i3dr_phobos"/>
     <arg name="imu" default="true"/>
     <arg name="map" default="true" />
-    <arg name="depth_max" default="100" />
+    <arg name="depth_max" default="10" />
 
     <!-- Use full res camera model mesh (slower) -->
     <arg name="camera_mesh" default="false" />
@@ -88,7 +88,7 @@
 
     <group if="$(arg map)">
         <arg name="map_frame_id" default="scan" />
-        <arg name="map_resolution" default="0.001"/>
+        <arg name="map_resolution" default="0.01"/>
         <include if="$(arg map)" file="$(find i3dr_rtabmap)/launch/standalone_rtabmap.launch">
             <arg name="camera_en" value="false"/>
             <arg name="camera_namespace" value="$(arg camera_namespace)"/>
