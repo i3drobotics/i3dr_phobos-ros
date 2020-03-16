@@ -20,6 +20,7 @@
 
     <arg name="imu" default="true"/>
     <arg name="publish_imu_tf" default="false"/>
+    <arg name="gui" default="false" />
 
     <!-- camera calibration files -->
     <arg name="calibration_folder" default="04-03-2020" />
@@ -69,5 +70,7 @@
     <!-- run rviz with config file -->
     <node if="$(arg rviz)" pkg="rviz" type="rviz" name="$(arg camera_model)_capture_rivz" 
         args="-d $(find i3dr_phobos)/rviz/$(arg camera_model)_standalone_scene.rviz"/>
+
+    <node if="$(arg gui)" pkg="i3dr_stereo_camera" type="stereo_gui" name="$(anon stereo_gui)" ns="$(arg camera_namespace)" output="screen"/>
 
 </launch>

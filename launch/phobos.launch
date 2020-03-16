@@ -20,9 +20,10 @@
     <arg name="camera_type" default="1"/>
     <!-- namespace for camera -->
     <arg name="camera_namespace" default="i3dr_phobos"/>
-    <arg name="imu" default="true"/>
+    <arg name="imu" default="false"/>
     <arg name="map" default="false" />
     <arg name="depth_max" default="100" />
+    <arg name="gui" default="true" />
 
     <!-- Use full res camera model mesh (slower) -->
     <arg name="camera_mesh" default="false" />
@@ -56,6 +57,7 @@
         <arg name="camera_right_serial" value="$(arg camera_right_serial)"/>
         <arg name="imu" value="$(arg imu)"/>
         <arg name="publish_imu_tf" value="$(eval arg('map') == 0)"/>
+        <arg name="gui" value="false"/>
     </include>
 
     <include file="$(find i3dr_phobos)/launch/phobos_processing.launch">
@@ -76,6 +78,7 @@
         <arg name="imu" value="$(arg imu)"/>
         <arg name="map" value="$(arg map)" />
         <arg name="depth_max" value="$(arg depth_max)" />
+        <arg name="gui" value="$(arg gui)"/>
     </include>
 
 </launch>
