@@ -24,6 +24,7 @@
     <arg name="map" default="true" />
     <arg name="depth_max" default="10" />
     <arg name="gui" default="false" />
+    <arg name="cropByDisp" default="false" />
 
     <!-- Use full res camera model mesh (slower) -->
     <arg name="camera_mesh" default="false" />
@@ -86,15 +87,24 @@
         <arg if="$(eval arg('stereo_algorithm') == 2)" name="disparity_range" value="384" />
     </include>
 
+    <group unless="$(eval arg('split_laser'))">
+        <arg if="$(eval arg('cropByDisp'))" name="rgb_topic" default="/$(arg camera_namespace)/left/image_rect_disp_cropped"/>
+        <arg unless="$(eval arg('cropByDisp'))" name="rgb_topic" default="/$(arg camera_namespace)/left/image_rect"/>
+    </group>
+    <group if="$(eval arg('split_laser'))">
+        <arg if="$(eval arg('cropByDisp'))" name="rgb_topic" default="/$(arg camera_namespace)/left/image_rect_no_laser_disp_cropped"/>
+        <arg unless="$(eval arg('cropByDisp'))" name="rgb_topic" default="/$(arg camera_namespace)/left/image_rect_no_laser"/>
+    </group>
+
     <group if="$(arg map)">
         <arg name="map_frame_id" default="scan" />
         <arg name="map_resolution" default="0.01"/>
         <include if="$(arg map)" file="$(find i3dr_rtabmap)/launch/standalone_rtabmap.launch">
+            <arg name="rgb_topic" value="$(arg rgb_topic)"/>
             <arg name="camera_en" value="false"/>
             <arg name="camera_namespace" value="$(arg camera_namespace)"/>
             <arg name="camera_model" value="$(arg camera_model)"/>
             <arg name="urdf_namespace" value="$(arg urdf_namespace)"/>
-            <arg name="split_laser" value="false"/>
             <arg name="rviz" value="$(arg rviz)" />
             <arg name="map_frame_id" value="$(arg map_frame_id)"/>
             <arg name="grid_size" value="$(arg map_resolution)" />

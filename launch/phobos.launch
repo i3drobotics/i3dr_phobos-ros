@@ -7,7 +7,7 @@
     <!-- algorithm 0: OpenCV block -->
     <!-- algorithm 1: OpenCV SGBM -->
     <!-- algorithm 2: I3DR SGM -->
-    <arg name="stereo_algorithm" default="2" />
+    <arg name="stereo_algorithm" default="0" />
     <!-- enable/disable rviz -->
     <arg name="rviz" default="false" />
     <!-- enable/disable calibration -->
@@ -24,6 +24,8 @@
     <arg name="map" default="false" />
     <arg name="depth_max" default="100" />
     <arg name="gui" default="true" />
+
+    <arg name="exposure" default="100000"/>
 
     <!-- Use full res camera model mesh (slower) -->
     <arg name="camera_mesh" default="false" />
@@ -44,6 +46,7 @@
     <arg if="$(eval camera_type == 1)" name="camera_left_serial" default="$(arg camera_model)_l"/>
 
     <include file="$(find i3dr_phobos)/launch/phobos_capture.launch">
+        <arg name="exposure" value="$(arg exposure)"/>
         <arg name="camera_model" value="$(arg camera_model)"/>
         <arg name="rviz" value="false" />
         <arg name="split_laser" value="$(arg split_laser)"/>
