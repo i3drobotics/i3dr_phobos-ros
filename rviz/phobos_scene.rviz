@@ -7,7 +7,6 @@ Panels:
         - /Global Options1
         - /Status1
         - /TF1/Frames1
-        - /PointCloud21
       Splitter Ratio: 0.5
     Tree Height: 530
   - Class: rviz/Selection
@@ -280,18 +279,18 @@ Visualization Manager:
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.106299713
-        Y: -0.652543902
-        Z: -0.320429206
+        X: -0.225110158
+        Y: -0.551401794
+        Z: -0.269952714
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.594795883
+      Pitch: 0.559795916
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.644912362
+      Yaw: 1.3349117
     Saved: ~
 Window Geometry:
   Depth:
@@ -315,5 +314,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1855
-  X: 1985
+  X: 65
   Y: 24
