@@ -64,7 +64,7 @@
         <arg name="split_laser" value="$(arg split_laser)"/>
     </include>
 
-    <include if="$(arg imu)" file="$(find rosserial_adafruit_bno055)/launch/rosserial_adafruit_bno055.launch">
+    <include if="$(arg imu)" file="$(find i3dr_rosserial_phobos)/launch/i3dr_rosserial_phobos.launch">
         <arg name="port" value="/dev/ttyACM0"/>
         <arg name="frame_id" value="$(arg urdf_namespace)_base_link"/>
         <arg name="namespace" value=""/>
