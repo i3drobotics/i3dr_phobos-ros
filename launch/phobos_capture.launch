@@ -26,6 +26,8 @@
     <arg name="publish_imu_tf" default="false"/>
     <arg name="gui" default="false" />
 
+    <arg name="binning" default="1" />
+
     <!-- camera calibration files -->
     <arg name="calibration_folder" default="04-03-2020" />
     <arg name="cameraLeft_info_url"  default="file://$(find i3dr_phobos)/calibration/$(arg camera_model)/$(arg calibration_folder)/left.yaml" />
@@ -42,7 +44,7 @@
     <!-- STEREO CAPTURE -->
     <include file="$(find i3dr_stereo_camera)/launch/stereo_capture.launch">
         <!-- camera startup settings -->
-        <arg name="exposure" value="$(arg exposure)"/>
+        <arg name="exposure" value="$(eval arg('exposure')/arg('binning'))"/>
         <arg name="gain" value="0"/>
         <arg name="fps" value="1"/>
         <!-- camera calibration files-->
@@ -53,7 +55,7 @@
 
         <!-- 0=TIS, 1=Basler -->
         <arg name="camera_type" value="$(arg camera_type)"/>
-        <arg name="binning" value="1"/>
+        <arg name="binning" value="$(arg binning)"/>
         <!-- camera is mounted upside down so flip the image -->
         <arg name="reverse_x" value="true"/>
         <arg name="reverse_y" value="true"/>

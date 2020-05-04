@@ -7,6 +7,8 @@ Panels:
         - /Global Options1
         - /Status1
         - /TF1/Frames1
+        - /Left1
+        - /Right1
       Splitter Ratio: 0.5
     Tree Height: 530
   - Class: rviz/Selection
@@ -90,6 +92,10 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+        i3dr_phobos_imu_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
         i3dr_phobos_mount_base_link:
           Alpha: 1
           Show Axes: false
@@ -135,6 +141,8 @@ Visualization Manager:
           Value: true
         i3dr_phobos_depth_optical_frame:
           Value: true
+        i3dr_phobos_imu_link:
+          Value: true
         i3dr_phobos_mount_base_link:
           Value: true
         i3dr_phobos_mount_point_1:
@@ -145,6 +153,8 @@ Visualization Manager:
           Value: true
         i3dr_phobos_mount_point_4:
           Value: true
+        odom:
+          Value: true
       Marker Scale: 0.300000012
       Name: TF
       Show Arrows: true
@@ -152,6 +162,8 @@ Visualization Manager:
       Show Names: true
       Tree:
         i3dr_phobos_base_link:
+          i3dr_phobos_imu_link:
+            {}
           i3dr_phobos_mount_base_link:
             i3dr_phobos_center:
               i3dr_phobos_cameraLeft:
@@ -170,11 +182,13 @@ Visualization Manager:
               {}
             i3dr_phobos_mount_point_4:
               {}
+        odom:
+          {}
       Update Interval: 0
       Value: true
     - Class: rviz/Image
       Enabled: true
-      Image Topic: /i3dr_phobos/left/image_rect
+      Image Topic: /i3dr_phobos/left/image_raw
       Max Value: 1
       Median window: 5
       Min Value: 0
@@ -228,7 +242,7 @@ Visualization Manager:
       Value: true
     - Class: rviz/Image
       Enabled: true
-      Image Topic: /i3dr_phobos/right/image_rect
+      Image Topic: /i3dr_phobos/right/image_raw
       Max Value: 1
       Median window: 5
       Min Value: 0
@@ -279,18 +293,18 @@ Visualization Manager:
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.225110158
-        Y: -0.551401794
-        Z: -0.269952714
+        X: -0.224341571
+        Y: -0.5626809
+        Z: -0.252739131
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.559795916
+      Pitch: 0.479795992
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 1.3349117
+      Yaw: 1.44991159
     Saved: ~
 Window Geometry:
   Depth:

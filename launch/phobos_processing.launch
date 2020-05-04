@@ -7,7 +7,7 @@
     <!-- algorithm 0: OpenCV block -->
     <!-- algorithm 1: OpenCV SGBM -->
     <!-- algorithm 2: I3DR SGM -->
-    <arg name="stereo_algorithm" default="2" />
+    <arg name="stereo_algorithm" default="0" />
     <!-- enable/disable rviz -->
     <arg name="rviz" default="false" />
     <!-- enable/disable calibration -->
@@ -73,7 +73,7 @@
         <!-- maximum depth value (m) -->
         <arg name="depth_max" value="$(arg depth_max)" />
         <!-- TODO fix issue with i3dr alg giving extra 3D close to the camera -->
-        <arg name="depth_min" value="0.4" />
+        <arg name="depth_min" value="0.1" />
 
         <arg name="split_laser" value="$(arg split_laser)"/>
         <arg name="camera_namespace" value="$(arg camera_namespace)"/>
@@ -83,8 +83,10 @@
         <arg if="$(eval arg('stereo_algorithm') == 0)" name="disparity_range" value="384" />
         <arg if="$(eval arg('stereo_algorithm') == 1)" name="min_disparity" value="-674" />
         <arg if="$(eval arg('stereo_algorithm') == 1)" name="disparity_range" value="384" />
-        <arg if="$(eval arg('stereo_algorithm') == 2)" name="min_disparity" value="-1800" />
-        <arg if="$(eval arg('stereo_algorithm') == 2)" name="disparity_range" value="384" />
+        <arg if="$(eval stereo_algorithm == 2)" name="min_disparity" value="500" />
+        <arg if="$(eval stereo_algorithm == 2)" name="disparity_range" value="530" />
+        <arg if="$(eval stereo_algorithm == 2)" name="prefilter_cap" value="5" />
+        <arg if="$(eval stereo_algorithm == 2)" name="interp" value="false"/>
     </include>
 
     <group unless="$(eval arg('split_laser'))">
