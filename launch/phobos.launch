@@ -42,8 +42,8 @@
     <arg if="$(eval camera_type == 0)" name="camera_right_serial" default="31710277"/>
     <arg if="$(eval camera_type == 0)" name="camera_left_serial" default="31710260"/>
     <!-- Basler -->
-    <arg if="$(eval camera_type == 1)" name="camera_right_serial" default="$(arg camera_model)_r"/>
-    <arg if="$(eval camera_type == 1)" name="camera_left_serial" default="$(arg camera_model)_l"/>
+    <arg if="$(eval camera_type == 1)" name="camera_right_serial" default="i3dr_$(arg camera_model)_r"/>
+    <arg if="$(eval camera_type == 1)" name="camera_left_serial" default="i3dr_$(arg camera_model)_l"/>
 
     <include file="$(find i3dr_phobos)/launch/phobos_capture.launch">
         <arg name="exposure" value="$(arg exposure)"/>
