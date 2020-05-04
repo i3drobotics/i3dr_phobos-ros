@@ -1,6 +1,6 @@
 image_width: 2448
 image_height: 2048
-camera_name: phobos_l
+camera_name: i3dr_phobos_l
 camera_matrix:
   rows: 3
   cols: 3
