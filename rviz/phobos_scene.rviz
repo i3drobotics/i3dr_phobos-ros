@@ -7,8 +7,7 @@ Panels:
         - /Global Options1
         - /Status1
         - /TF1/Frames1
-        - /Left1
-        - /Right1
+        - /PointCloud21
       Splitter Ratio: 0.5
     Tree Height: 530
   - Class: rviz/Selection
@@ -188,7 +187,7 @@ Visualization Manager:
       Value: true
     - Class: rviz/Image
       Enabled: true
-      Image Topic: /i3dr_phobos/left/image_raw
+      Image Topic: /i3dr_phobos/left/image_rect
       Max Value: 1
       Median window: 5
       Min Value: 0
@@ -220,7 +219,7 @@ Visualization Manager:
       Position Transformer: XYZ
       Queue Size: 10
       Selectable: true
-      Size (Pixels): 3
+      Size (Pixels): 1
       Size (m): 0.0299999993
       Style: Points
       Topic: /i3dr_phobos/points2
@@ -242,7 +241,7 @@ Visualization Manager:
       Value: true
     - Class: rviz/Image
       Enabled: true
-      Image Topic: /i3dr_phobos/right/image_raw
+      Image Topic: /i3dr_phobos/right/image_rect
       Max Value: 1
       Median window: 5
       Min Value: 0
@@ -255,12 +254,12 @@ Visualization Manager:
     - Alpha: 0.5
       Class: rviz_plugin_tutorials/Imu
       Color: 204; 51; 204
-      Enabled: true
+      Enabled: false
       History Length: 1
       Name: Imu
       Topic: /imu/data
       Unreliable: false
-      Value: true
+      Value: false
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -286,25 +285,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 2.43171763
+      Distance: 3.23566532
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.224341571
-        Y: -0.5626809
-        Z: -0.252739131
+        X: 0.740117311
+        Y: 1.74793041
+        Z: -0.22945708
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.479795992
+      Pitch: 0.304796904
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 1.44991159
+      Yaw: 4.35307932
     Saved: ~
 Window Geometry:
   Depth:

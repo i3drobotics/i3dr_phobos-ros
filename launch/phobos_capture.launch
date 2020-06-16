@@ -26,7 +26,7 @@
     <arg name="publish_imu_tf" default="false"/>
     <arg name="gui" default="false" />
 
-    <arg name="binning" default="1" />
+    <arg name="binning" default="2" />
 
     <!-- camera calibration files -->
     <arg name="calibration_folder" default="04-03-2020" />
@@ -45,8 +45,9 @@
     <include file="$(find i3dr_stereo_camera)/launch/stereo_capture.launch">
         <!-- camera startup settings -->
         <arg name="exposure" value="$(eval arg('exposure')/arg('binning'))"/>
-        <arg name="gain" value="0"/>
-        <arg name="fps" value="1"/>
+        <arg name="gain" value="10"/>
+        <arg name="fps" value="15"/> <!-- if using hardware trigger MUST be higher than external trigger fps-->
+        <arg name="hardware_trigger" value="true"/>
         <!-- camera calibration files-->
         <arg name="camera_info_right" value="$(arg cameraRight_info_url)" />
         <arg name="camera_info_left" value="$(arg cameraLeft_info_url)" />

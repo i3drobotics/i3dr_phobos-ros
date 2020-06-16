@@ -22,9 +22,15 @@
     <arg name="camera_namespace" default="i3dr_phobos"/>
     <arg name="imu" default="true"/>
     <arg name="map" default="true" />
-    <arg name="depth_max" default="10" />
+    <arg name="depth_max" default="100" />
+    <arg name="depth_min" default="0.1" />
     <arg name="gui" default="false" />
+
+    <!-- mapping settings -->
     <arg name="cropByDisp" default="false" />
+    <arg name="clearMapOnStart" default="true" />
+    <arg name="database_path" default="~/.ros/rtabmap.db" />
+    <arg name="localization" default="false" /> <!-- true: map, false: localise -->
 
     <!-- Use full res camera model mesh (slower) -->
     <arg name="camera_mesh" default="false" />
@@ -73,30 +79,34 @@
         <!-- maximum depth value (m) -->
         <arg name="depth_max" value="$(arg depth_max)" />
         <!-- TODO fix issue with i3dr alg giving extra 3D close to the camera -->
-        <arg name="depth_min" value="0.1" />
+        <arg name="depth_min" value="$(arg depth_min)" />
 
         <arg name="split_laser" value="$(arg split_laser)"/>
         <arg name="camera_namespace" value="$(arg camera_namespace)"/>
         <arg name="frame_id" value="$(arg urdf_namespace)_depth_optical_frame" />
 
-        <arg if="$(eval arg('stereo_algorithm') == 0)" name="min_disparity" value="-674" />
-        <arg if="$(eval arg('stereo_algorithm') == 0)" name="disparity_range" value="384" />
-        <arg if="$(eval arg('stereo_algorithm') == 1)" name="min_disparity" value="-674" />
-        <arg if="$(eval arg('stereo_algorithm') == 1)" name="disparity_range" value="384" />
-        <arg if="$(eval stereo_algorithm == 2)" name="min_disparity" value="500" />
-        <arg if="$(eval stereo_algorithm == 2)" name="disparity_range" value="530" />
-        <arg if="$(eval stereo_algorithm == 2)" name="prefilter_cap" value="5" />
+        <arg if="$(eval stereo_algorithm == 0)" name="min_disparity" value="0" />
+        <arg if="$(eval stereo_algorithm == 0)" name="disparity_range" value="512" />
+        <arg if="$(eval stereo_algorithm == 1)" name="min_disparity" value="0" />
+        <arg if="$(eval stereo_algorithm == 1)" name="disparity_range" value="512" />
+        <arg if="$(eval stereo_algorithm == 2)" name="correlation_window_size" value="10" />
+        <arg if="$(eval stereo_algorithm == 2)" name="min_disparity" value="0" />
+        <arg if="$(eval stereo_algorithm == 2)" name="disparity_range" value="280" />
+        <arg if="$(eval stereo_algorithm == 2)" name="speckle_range" value="5" />
+        <arg if="$(eval stereo_algorithm == 2)" name="speckle_size" value="1000" />
         <arg if="$(eval stereo_algorithm == 2)" name="interp" value="false"/>
     </include>
 
-    <group unless="$(eval arg('split_laser'))">
-        <arg if="$(eval arg('cropByDisp'))" name="rgb_topic" default="/$(arg camera_namespace)/left/image_rect_disp_cropped"/>
-        <arg unless="$(eval arg('cropByDisp'))" name="rgb_topic" default="/$(arg camera_namespace)/left/image_rect"/>
-    </group>
-    <group if="$(eval arg('split_laser'))">
+    <group if="$(eval split_laser == 1)">
         <arg if="$(eval arg('cropByDisp'))" name="rgb_topic" default="/$(arg camera_namespace)/left/image_rect_no_laser_disp_cropped"/>
         <arg unless="$(eval arg('cropByDisp'))" name="rgb_topic" default="/$(arg camera_namespace)/left/image_rect_no_laser"/>
     </group>
+    <group if="$(eval split_laser == 0)">
+        <arg if="$(eval arg('cropByDisp'))" name="rgb_topic" default="/$(arg camera_namespace)/left/image_rect_disp_cropped"/>
+        <arg unless="$(eval arg('cropByDisp'))" name="rgb_topic" default="/$(arg camera_namespace)/left/image_rect"/>
+    </group>
+
+    <arg name="rgb_topic" default="/$(arg camera_namespace)/left/image_rect"/>
 
     <group if="$(arg map)">
         <arg name="map_frame_id" default="scan" />
@@ -114,6 +124,9 @@
             <arg name="gftt_min_dist" value="10"/>
             <arg name="max_depth" value="$(arg depth_max)"/>
             <arg name="use_compressed" value="false"/>
+            <arg name="clearMapOnStart" value="$(arg clearMapOnStart)"/>
+            <arg name="database_path" value="$(arg database_path)" />
+            <arg name="localization" value="$(arg localization)"/>
         </include>
     </group>
     <group unless="$(arg map)">
