@@ -50,6 +50,11 @@ jobs:
           mkdir -p ~/catkin_ws/src
           cd ~/catkin_ws
           catkin build
+          echo "Pylon root $PYLON_ROOT"
+          $PYLON_ROOT/bin/pylon-config --version-major
+          $PYLON_ROOT/bin/pylon-config --cflags-only-I
+          $PYLON_ROOT/bin/pylon-config --libs-only-l
+          $PYLON_ROOT/bin/pylon-config --libs-only-L
           wstool init src $GITHUB_WORKSPACE/install/i3dr_phobos_ros_https.rosinstall
           rosdep install --from-paths src --ignore-src -r -y
       - name: Build workspace
