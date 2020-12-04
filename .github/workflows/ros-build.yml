@@ -25,6 +25,9 @@ jobs:
         run: |
           echo "Pylon root $PYLON_ROOT"
           $PYLON_ROOT/bin/pylon-config --version-major
+          $PYLON_ROOT/bin/pylon-config --cflags-only-I
+          $PYLON_ROOT/bin/pylon-config --libs-only-l
+          $PYLON_ROOT/bin/pylon-config --libs-only-L
       - name: Install ROS
         run: |
             sudo sh -c "echo \"deb http://packages.ros.org/ros/ubuntu $ROS_CI_DESKTOP main\" > /etc/apt/sources.list.d/ros-latest.list"
