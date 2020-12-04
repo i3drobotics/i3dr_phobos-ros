@@ -16,6 +16,18 @@ jobs:
       ROS_DISTRO: kinetic
     steps:
       - uses: actions/checkout@v2
+      - name: Install Pylon test
+        run: |
+          wget -O pylon.deb https://www.baslerweb.com/fp-1589378344/media/downloads/software/pylon_software/pylon_6.1.1.19861-deb0_amd64.deb
+          sudo dpkg -i pylon.deb
+      - name: Check Pylon test
+        run: |
+          echo "Pylon root $PYLON_ROOT"
+          ls /opt/
+          ls /opt/pylon/
+          ls /opt/pylon/bin
+          ls /opt/hostedtoolcache/pylon/
+          ls /opt/hostedtoolcache/pylon/bin
       - name: Install ROS
         run: |
             sudo sh -c "echo \"deb http://packages.ros.org/ros/ubuntu $ROS_CI_DESKTOP main\" > /etc/apt/sources.list.d/ros-latest.list"
