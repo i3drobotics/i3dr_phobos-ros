@@ -66,7 +66,6 @@
 
     <!-- STEREO MATCHER -->
     <include if="$(arg stereo_match)" file="$(find i3dr_stereo_camera)/launch/stereo_matcher.launch">
-        <arg name="use_i3dr_matcher" value="true"/>
 
         <!-- Matcher Parameters -->
         <!-- see link below for details on matcher parameters -->
