@@ -22,7 +22,9 @@ jobs:
           wget -O pylon.deb https://www.baslerweb.com/fp-1589378344/media/downloads/software/pylon_software/pylon_6.1.1.19861-deb0_amd64.deb
           sudo dpkg -i pylon.deb
       - name: Check Pylon
-        run: echo "Pylon root $PYLON_ROOT"
+        run: |
+          echo "Pylon root $PYLON_ROOT"
+          $PYLON_ROOT/bin/pylon-config --version-major
       - name: Install ROS
         run: |
             sudo sh -c "echo \"deb http://packages.ros.org/ros/ubuntu $ROS_CI_DESKTOP main\" > /etc/apt/sources.list.d/ros-latest.list"
