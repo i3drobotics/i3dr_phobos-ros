@@ -7,6 +7,9 @@ Phobos is a high resolution (5MP), high accuracy (sub-mm up to a few metres), gl
 This package will work with both Basler and The Imaging Source implimentations of the Phobos Stereo Systems.
 Basler implimentation will work as USB or GigE. 
 
+## Status
+![ROS Build](https://github.com/i3drobotics/i3dr_phobos-ros/workflows/ROS%20Build/badge.svg?event=push)
+
 ## Requirements
 
 This package relies on the **i3dr_stereo_camera** package for capture and generation of 3D. Please make sure you have the **i3dr_stereo_camera** package in your workspace.
