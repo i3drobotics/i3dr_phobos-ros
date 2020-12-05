@@ -21,13 +21,8 @@ jobs:
         run: |
           wget -O pylon.deb https://www.baslerweb.com/fp-1589378344/media/downloads/software/pylon_software/pylon_6.1.1.19861-deb0_amd64.deb
           sudo dpkg -i pylon.deb
-      - name: Check Pylon
-        run: |
           echo "Pylon root $PYLON_ROOT"
           $PYLON_ROOT/bin/pylon-config --version-major
-          $PYLON_ROOT/bin/pylon-config --cflags-only-I
-          $PYLON_ROOT/bin/pylon-config --libs-only-l
-          $PYLON_ROOT/bin/pylon-config --libs-only-L
       - name: Install ROS
         run: |
             sudo sh -c "echo \"deb http://packages.ros.org/ros/ubuntu $ROS_CI_DESKTOP main\" > /etc/apt/sources.list.d/ros-latest.list"
@@ -50,11 +45,6 @@ jobs:
           mkdir -p ~/catkin_ws/src
           cd ~/catkin_ws
           catkin build
-          echo "Pylon root $PYLON_ROOT"
-          $PYLON_ROOT/bin/pylon-config --version-major
-          $PYLON_ROOT/bin/pylon-config --cflags-only-I
-          $PYLON_ROOT/bin/pylon-config --libs-only-l
-          $PYLON_ROOT/bin/pylon-config --libs-only-L
           wstool init src $GITHUB_WORKSPACE/install/i3dr_phobos_ros_https.rosinstall
           rosdep install --from-paths src --ignore-src -r -y
       - name: Build workspace
