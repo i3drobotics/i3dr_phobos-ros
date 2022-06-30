@@ -2,8 +2,7 @@
 <!--XML-->
 <launch>
     <!-- SETUP ARGUMENTS -->
-    <!-- phobos / phobos_nuclear -->
-    <arg name="camera_model" default="phobos"/>
+    <arg name="camera_serial" default="abc123" />
     <!-- algorithm 0: OpenCV block -->
     <!-- algorithm 1: OpenCV SGBM -->
     <!-- algorithm 2: I3DR SGM -->
@@ -12,15 +11,13 @@
     <arg name="rviz" default="false" />
     <!-- enable/disable calibration -->
     <arg name="calibrate" default="false"/>
-    <!-- is camera with split laser functionality being used -->
-    <arg name="split_laser" default="false"/>
     <!-- enable/disbale stereo matching (3D generation) -->
     <arg name="stereo_match" default="true"/>
     <!-- 0=TIS, 1=Basler -->
     <arg name="camera_type" default="1"/>
     <!-- namespace for camera -->
     <arg name="camera_namespace" default="i3dr_phobos"/>
-    <arg name="imu" default="true"/>
+    <arg name="imu" default="false"/>
     <arg name="map" default="false" />
     <arg name="depth_max" default="100" />
     <arg name="gui" default="false" />
@@ -39,18 +36,17 @@
     <arg name="urdf_namespace" default="$(arg camera_namespace)"/>
     
     <!-- camera calibration files -->
-    <arg name="calibration_folder" default="02-06-2020/bin2" />
-    <arg name="cameraLeft_info_url"  default="file://$(find i3dr_phobos)/calibration/$(arg camera_model)/$(arg calibration_folder)/left.yaml" />
-    <arg name="cameraRight_info_url" default="file://$(find i3dr_phobos)/calibration/$(arg camera_model)/$(arg calibration_folder)/right.yaml" />
-
-    <!-- Be sure to change this to your cameras id -->
-    <!-- TIS -->
-    <arg if="$(eval camera_type == 0)" name="camera_right_serial" default="31710277"/>
-    <arg if="$(eval camera_type == 0)" name="camera_left_serial" default="31710260"/>
-    <!-- Basler -->
-    <arg if="$(eval camera_type == 1)" name="camera_right_serial" default="i3dr_$(arg camera_model)_001_r"/>
-    <arg if="$(eval camera_type == 1)" name="camera_left_serial" default="i3dr_$(arg camera_model)_001_l"/>
-
+    <arg name="cameraLeft_info_url"  default="file://$(find i3dr_phobos)/calibration/$(arg camera_serial)/left.yaml" />
+    <arg name="cameraRight_info_url" default="file://$(find i3dr_phobos)/calibration/$(arg camera_serial)/right.yaml" />
+    
+    <arg name="camera_right_serial" default="$(arg camera_serial)r"/>
+    <arg name="camera_left_serial" default="$(arg camera_serial)l"/>
+    
+    <arg name="camera_model" default="phobos"/>
+    <arg name="camera_type" default="1"/> <!-- 1 = Basler -->
+    <!-- is camera with split laser functionality being used -->
+    <arg name="split_laser" default="false"/>
+    
     <include file="$(find i3dr_phobos)/launch/phobos_capture.launch">
         <arg name="exposure" value="$(arg exposure)"/>
         <arg name="camera_model" value="$(arg camera_model)"/>
@@ -65,7 +61,7 @@
         <arg name="camera_left_serial" value="$(arg camera_left_serial)"/>
         <arg name="camera_right_serial" value="$(arg camera_right_serial)"/>
         <arg name="imu" value="$(arg imu)"/>
-        <arg name="publish_imu_tf" value="$(eval arg('map') == 0)"/>
+<!--         <arg name="publish_imu_tf" value="$(eval arg('map') == 0)"/> -->
         <arg name="gui" value="false"/>
     </include>
 
