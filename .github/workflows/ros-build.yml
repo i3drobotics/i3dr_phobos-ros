@@ -19,9 +19,6 @@ jobs:
       ROSINSTALL_FILE: $GITHUB_WORKSPACE/dependencies.rosinstall
       CATKIN_OPTIONS: $GITHUB_WORKSPACE/catkin.options
       ROS_PARALLEL_JOBS: '-j8 -l6'
-      # Set the python path manually to include /usr/-/python2.7/dist-packages
-      # as this is where apt-get installs python packages.
-      PYTHONPATH: $PYTHONPATH:/usr/lib/python2.7/dist-packages:/usr/local/lib/python2.7/dist-packages
       ROS_DISTRO: ${{ matrix.rosdistro }}
       PYTHON_PREFIX: ${{ matrix.pythonprefix }}
       PYLON_ROOT: /opt/pylon
