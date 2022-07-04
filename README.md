@@ -15,11 +15,11 @@ Basler implimentation will work as USB or GigE.
 For an easy setup, a rosinstall file is provided in 'install' folder of this repo which can be used to get this package and it's dependent ros packages in your workspace. 
 In your ROS workspace use the following command:
 ```
-wstool init src https://raw.githubusercontent.com/i3drobotics/i3dr_phobos-ros/master/install/i3dr_phobos_https.rosinstall
+wstool init src https://raw.githubusercontent.com/i3drobotics/i3dr_phobos-ros/main/install/i3dr_phobos_https.rosinstall
 ```
 If you already have a wstool workspace setup then use the following command instead:
 ```
-wstool merge -t src https://raw.githubusercontent.com/i3drobotics/i3dr_phobos-ros/master/install/i3dr_phobos_https.rosinstall
+wstool merge -t src https://raw.githubusercontent.com/i3drobotics/i3dr_phobos-ros/main/install/i3dr_phobos_https.rosinstall
 wstool update -t src
 ```
 
